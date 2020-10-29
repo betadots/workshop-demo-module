@@ -4,7 +4,7 @@
 #
 # @example
 #   include project_d
-class project_d {
+class demo_module {
   $bool = true
   $integer_1 = project_d::any2int($bool)
   notify { "Integer 1: ${integer_1}": }

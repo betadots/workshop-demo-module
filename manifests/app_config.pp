@@ -4,7 +4,7 @@
 #
 # @example
 #   include project_d::app_config
-class project_d::app_config {
+class demo_module::app_config {
 
   App_config {
     ensure => present,
