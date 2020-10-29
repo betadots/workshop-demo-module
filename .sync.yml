@@ -1,0 +1,8 @@
+---
+spec/spec_helper.rb:
+  mock_with: ':rspec'
+Gemfile:
+  optional:
+    ':development':
+      - gem: 'puppet-resource_api'
+      - gem: 'pry'
