@@ -6,3 +6,6 @@ Gemfile:
     ':development':
       - gem: 'puppet-resource_api'
       - gem: 'pry'
+      - gem: facter
+        version: '> 4.0.43'
+        platforms: mri_25
