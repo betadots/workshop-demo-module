@@ -40,7 +40,7 @@ class Puppet::Provider::AppConfig2::AppConfig2 < Puppet::ResourceApi::SimpleProv
     context.notice("Creating '#{key}' with #{should.inspect}")
     stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe set #{key} #{should}")
     if status.success?
-      stdout
+      true
     end
   end
 
@@ -48,14 +48,16 @@ class Puppet::Provider::AppConfig2::AppConfig2 < Puppet::ResourceApi::SimpleProv
     context.notice("Updating '#{key}' with #{should.inspect}")
     stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe set #{key} #{should}")
     if status.success?
-      stdout
+      true
     end
   end
 
   def delete(context, key)
     context.notice("Deleting '#{key}'")
     stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe rm #{key}")
-    status
+    if status-success?
+      true
+    end
   end
 end
 
