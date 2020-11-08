@@ -8,45 +8,40 @@ class Puppet::Provider::AppConfig2::AppConfig2 < Puppet::ResourceApi::SimpleProv
   #confine :exists => '/opt/app/bin/app.exe'
   #has_command(:app_cli, '/opt/app/bin/app.exe')
   def get(context)
+    context.debug('Returning data from command')
 
     @result = []
     stdout,stderr,status = Open3.capture3('/opt/app/bin/app.exe list')
     if status.success?
-      @result = stdout.split(/\n/).grep(/^#{key}/)
-    end
-    if @result.length > 1
-      raise ParserError, 'found multiple config items found, please fix this'
-    end
-    if @result.length == 0
-      return false
+      @command_result = stdout.split(/\n/)
+      @command_result.each do |line|
+        next if line == '---'
+        key = line.split(':')[0]
+        value = line.split(':')[1].strip
+        hash = {
+          'ensure': 'present',
+          'key': key,
+          'value': value,
+        }
+        @result += [ hash ]
+      end
+      return @result
     else
-      @result[0].split[1]
+      ParseError "Error running command"
     end
-    #context.debug('Returning pre-canned example data')
-    #[
-    #  {
-    #    key: 'foo',
-    #    ensure: 'present',
-    #    value: 'bar',
-    #  },
-    #  {
-    #    key: 'bar',
-    #    ensure: 'absent',
-    #  },
-    #]
   end
 
   def create(context, key, should)
-    context.notice("Creating '#{key}' with #{should.inspect}")
-    stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe set #{key} #{should}")
+    context.notice("Creating '#{key}' with #{should[:value]}")
+    stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe set #{key} #{should[:value]}")
     if status.success?
       true
     end
   end
 
   def update(context, key, should)
-    context.notice("Updating '#{key}' with #{should.inspect}")
-    stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe set #{key} #{should}")
+    context.notice("Updating '#{key}' with #{should[:value]}")
+    stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe set #{key} #{should[:value]}")
     if status.success?
       true
     end
@@ -55,7 +50,7 @@ class Puppet::Provider::AppConfig2::AppConfig2 < Puppet::ResourceApi::SimpleProv
   def delete(context, key)
     context.notice("Deleting '#{key}'")
     stdout,stderr,status = Open3.capture3("/opt/app/bin/app.exe rm #{key}")
-    if status-success?
+    if status.success?
       true
     end
   end

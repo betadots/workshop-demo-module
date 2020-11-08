@@ -16,12 +16,9 @@ RSpec.describe Puppet::Provider::AppConfig2::AppConfig2 do
       allow(Open3).to receive(:open).with('/opt/app/bin/app.exe list').and_return("---\nkey: value\n")
       expect(provider.get(context)).to eq [
         {
-          name: 'foo',
+          name: 'key',
           ensure: 'present',
-        },
-        {
-          name: 'bar',
-          ensure: 'present',
+          value: 'value',
         },
       ]
     end
