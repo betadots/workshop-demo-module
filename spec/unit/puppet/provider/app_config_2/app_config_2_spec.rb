@@ -12,11 +12,12 @@ RSpec.describe Puppet::Provider::AppConfig2::AppConfig2 do
 
   describe '#get' do
     it 'processes resources' do
-      expect(context).to receive(:debug).with('Returning pre-canned example data')
-      allow(Open3).to receive(:open).with('/opt/app/bin/app.exe list').and_return("---\nkey: value\n")
+      expect(context).to receive(:debug).with('Returning data from command')
+      status = double("status message", :success? => true)
+      allow(Open3).to receive(:capture3).with('/opt/app/bin/app.exe list').and_return(["---\nkey: value\n", "", status])
       expect(provider.get(context)).to eq [
         {
-          name: 'key',
+          key: 'key',
           ensure: 'present',
           value: 'value',
         },
