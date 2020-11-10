@@ -27,7 +27,7 @@ class Puppet::Provider::AppConfig2::AppConfig2 < Puppet::ResourceApi::SimpleProv
       end
       return @result
     else
-      ParseError "Error running command"
+      raise ParseError "Error running command: \n#{stderr}"
     end
   end
 
