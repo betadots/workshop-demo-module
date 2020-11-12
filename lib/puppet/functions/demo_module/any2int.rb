@@ -1,4 +1,4 @@
-Puppet::Functions.create_function(:'project_d::any2int') do
+Puppet::Functions.create_function(:'demo_module::any2int') do
   dispatch :bool_to_int do
     param 'Boolean', :bool
   end

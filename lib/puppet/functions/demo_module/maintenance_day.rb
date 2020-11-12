@@ -1,4 +1,4 @@
-Puppet::Functions.create_function(:'project_d::maintenance_day') do
+Puppet::Functions.create_function(:'demo_module::maintenance_day') do
   dispatch :noparam do
   end
 

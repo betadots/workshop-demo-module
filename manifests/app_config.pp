@@ -3,7 +3,7 @@
 # A description of what this class does
 #
 # @example
-#   include project_d::app_config
+#   include demo_module::app_config
 class demo_module::app_config {
 
   App_config {

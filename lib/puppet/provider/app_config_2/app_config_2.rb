@@ -42,8 +42,8 @@ class Puppet::Provider::AppConfig2::AppConfig2 < Puppet::ResourceApi::SimpleProv
         value = line.split(':')[1].strip
         hash = {
           'ensure': 'present',
-          'key': key,
-          'value': value,
+          'key': 'key',
+          'value': 'value',
         }
         @result += [ hash ]
       end

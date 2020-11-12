@@ -12,10 +12,10 @@ describe provider_class do
   end
 
   let(:provider) do
-    provider_class.new(@resource)
+    provider_class.new(@resource) # rubocop:disable RSpec/InstanceVariable
   end
 
   it 'exists' do
-    provider_class.new(@resource)
+    provider_class.new(@resource) # rubocop:disable RSpec/InstanceVariable
   end
 end

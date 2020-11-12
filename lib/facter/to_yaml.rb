@@ -1,4 +1,5 @@
 require 'yaml'
+# convert data to yaml
 class Example42
   def initialize; end
 

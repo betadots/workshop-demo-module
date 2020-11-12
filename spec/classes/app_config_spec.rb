@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'project_d::app_config' do
+describe 'demo_module::app_config' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

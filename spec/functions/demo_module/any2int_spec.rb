@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'project_d::any2int' do
+describe 'demo_module::any2int' do
   context 'bool' do
     it { is_expected.to run.with_params(true).and_return(0) }
   end

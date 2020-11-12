@@ -12,11 +12,8 @@ Puppet::Type.type(:app_config).provide(:ruby) do
     if @result.length > 1
       raise ParserError, 'found multiple config items found, please fix this'
     end
-    if @result.empty?
-      return false
-    else
-      return true
-    end
+    return false if @result.empty?
+    return true unless @result.empty?
   end
 
   # resource entfernen
