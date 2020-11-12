@@ -2,17 +2,17 @@ require 'pry'
 Puppet::Type.type(:app_config).provide(:ruby) do
   desc 'Provider description'
 
-  confine :exists => '/opt/app/bin/app.exe'
+  confine exists: '/opt/app/bin/app.exe'
   has_command(:app_cli, '/opt/app/bin/app.exe')
 
   # pruefen, ob die resource existiert.
   def exists?
-    binding.pry
-    @result = app_cli('list').split(/\n/).grep(/^#{resource[:key]}/)
+    # binding.pry
+    @result = app_cli('list').split(%r{\n}).grep(%r{^#{resource[:key]}})
     if @result.length > 1
       raise ParserError, 'found multiple config items found, please fix this'
     end
-    if @result.length == 0
+    if @result.empty?
       return false
     else
       return true
@@ -35,8 +35,7 @@ Puppet::Type.type(:app_config).provide(:ruby) do
   end
 
   # setter - value setzen
-  def value=(value)
+  def value=(_value)
     app_cli('set', resource[:key], resource[:value])
   end
 end
- 

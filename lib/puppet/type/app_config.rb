@@ -7,9 +7,7 @@ Puppet::Type.newtype(:app_config) do
     desc 'The value of the key'
   end
 
-  newparam(:key, :namevar => true) do
+  newparam(:key, namevar: true) do
     desc 'The key to manage'
   end
-
 end
-

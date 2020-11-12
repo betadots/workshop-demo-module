@@ -13,8 +13,8 @@ RSpec.describe Puppet::Provider::AppConfig2::AppConfig2 do
   describe '#get' do
     it 'processes resources' do
       expect(context).to receive(:debug).with('Returning data from command')
-      status = double("status message", :success? => true)
-      allow(Open3).to receive(:capture3).with('/opt/app/bin/app.exe list').and_return(["---\nkey: value\n", "", status])
+      status = double('status message', success?: true)
+      allow(Open3).to receive(:capture3).with('/opt/app/bin/app.exe list').and_return(["---\nkey: value\n", '', status])
       expect(provider.get(context)).to eq [
         {
           key: 'key',
@@ -28,24 +28,30 @@ RSpec.describe Puppet::Provider::AppConfig2::AppConfig2 do
   describe 'create(context, key, should)' do
     it 'creates the resource' do
       expect(context).to receive(:notice).with(%r{\ACreating 'a'})
+      status = double('status message', success?: true)
+      allow(Open3).to receive(:capture3).with('/opt/app/bin/app.exe set a a').and_return(['', '', status])
 
-      provider.create(context, 'a', key: 'a', ensure: 'present')
+      provider.create(context, 'a', key: 'a', ensure: 'present', value: 'a')
     end
   end
 
   describe 'update(context, key, should)' do
     it 'updates the resource' do
-      expect(context).to receive(:notice).with(%r{\AUpdating 'foo'})
+      expect(context).to receive(:notice).with(%r{\AUpdating 'a'})
+      status = double('status message', success?: true)
+      allow(Open3).to receive(:capture3).with('/opt/app/bin/app.exe set a a').and_return(['', '', status])
 
-      provider.update(context, 'foo', key: 'foo', ensure: 'present')
+      provider.update(context, 'a', key: 'a', ensure: 'present', value: 'a')
     end
   end
 
   describe 'delete(context, key)' do
     it 'deletes the resource' do
-      expect(context).to receive(:notice).with(%r{\ADeleting 'foo'})
+      expect(context).to receive(:notice).with(%r{\ADeleting 'a'})
+      status = double('status message', success?: true)
+      allow(Open3).to receive(:capture3).with('/opt/app/bin/app.exe rm a').and_return(['', '', status])
 
-      provider.delete(context, 'foo')
+      provider.delete(context, 'a')
     end
   end
 end

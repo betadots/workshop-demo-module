@@ -10,14 +10,14 @@ class demo_module::app_config {
     ensure => present,
   }
   app_config { 'loglevellllllllll':
-    key    => 'loglevel',
-    value  => 'debug',
+    key   => 'loglevel',
+    value => 'debug',
   }
   app_config { 'user':
-    value  => 'martin',
+    value => 'martin',
   }
   app_config { 'cachepath':
-    value  => '/etc/app/cache',
+    value => '/etc/app/cache',
   }
 
 }
