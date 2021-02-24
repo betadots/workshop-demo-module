@@ -6,6 +6,9 @@
 #   include demo_module::app_config
 class demo_module::app_config {
 
+  $sorted_list = ['one', 'two'].sort
+  notify { $sorted_list: }
+
   App_config {
     ensure => present,
   }
