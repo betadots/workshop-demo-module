@@ -3,6 +3,8 @@ require 'facter/cert_extension_fact'
 
 describe 'Puppet Agent Fact' do
   describe 'cert_extension_fact.rb', type: :fact do
+    subject { Facter.fact(:puppet_agent_fact).value }
+
     before(:each) do
       Facter.clear
       allow(Facter.fact(:os)).to receive(:value).and_return(
@@ -13,7 +15,6 @@ describe 'Puppet Agent Fact' do
       )
     end
     after(:each) { Facter.clear }
-    subject { Facter.fact(:puppet_agent_fact).value }
 
     context 'when running' do
       it 'returns cert_extension_fact' do

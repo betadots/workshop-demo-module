@@ -35,4 +35,3 @@ Facter.add(:cert_extension) do
     extension_hash
   end
 end
-
