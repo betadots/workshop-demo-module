@@ -9,5 +9,10 @@ Puppet::Type.newtype(:app_config) do
 
   newparam(:key, namevar: true) do
     desc 'The key to manage'
+    validate do |value|
+      unless value =~ %r(\w+)
+        raise ArgumentError, "key must be a string, not #{value.class}"
+      end
+    end
   end
 end
