@@ -1,0 +1,10 @@
+{
+  "description": "Demotask",
+  "input_method": "environment",
+  "parameters": {
+    "ausgabe": {
+      "description": "Demostring zum eingeben/ausgeben",
+      "type": "String[1]"
+    }
+  }
+}
