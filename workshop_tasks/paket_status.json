@@ -1,0 +1,10 @@
+{
+  "description": "Demotask welcher prüft ob ein Paket installiert ist",
+  "input_method": "environment",
+  "parameters": {
+    "paket_name": {
+      "description": "Paket welches geprüft werden soll",
+      "type": "String[1]"
+    }
+  }
+}
