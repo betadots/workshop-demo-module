@@ -1,4 +1,4 @@
-plan demo::itzbund (
+plan demo_module::falschername (
   TargetSpec $servergruppe_1,
   TargetSpec $servergruppe_2,
   TargetSpec $servergruppe_3,
