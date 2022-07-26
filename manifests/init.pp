@@ -10,4 +10,8 @@ class demo_module (
   } else {
     notify { 'NOT managing access': }
   }
+  file { '/tmp/demo_module.txt':
+    ensure  => file,
+    content => "username: ${username}\nserver: ${server}\naccess: ${manage_access}\n",
+  }
 }
