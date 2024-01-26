@@ -9,7 +9,8 @@
 # @param file_ensure desired state for awesome file
 #
 # @author <tim.meusel@betadots.de>
-plan app1_example::workshop_plan (
+#
+plan app1_example::demo_complicated (
   TargetSpec $puppet_agent_group,
   TargetSpec $kernelversion_group,
   TargetSpec $file_group,
@@ -29,7 +30,21 @@ plan app1_example::workshop_plan (
   # https://www.puppet.com/docs/bolt/latest/bolt_types_reference.html#resultset
   if $agent_results.ok {
     $versions = $agent_results.results.map |$agent_result| { "${agent_result.target}: ${agent_result.value['version']}" }
+    # requires https://github.com/voxpupuli/puppet-format
+    $rows = $agent_results.results.map |$agent_result| { [$agent_result.target, $agent_result.value['version']] }
     out::message("Puppet versions are: ${versions}")
+    $table = format::table(
+      {
+        title => 'Puppet Agent Versions',
+        head  => ['Node', 'Version'],
+        rows  => $rows,
+        style => {width => 60 },
+      }
+    )
+    out::message("\n${table}")
+  } else {
+    $errors = $agent_results.results.map |$agent_result| { "${agent_result.target}: ${agent_result.value['version']}" }
+    fail('plan app1_example::workshop_plan: task enterprise_tasks::get_agent_version failed')
   }
 
   $kernel_results = run_task( 'facter_task', $kernelversion_group, 'Get the kernelversion fact', { 'fact' => 'kernelversion', })
